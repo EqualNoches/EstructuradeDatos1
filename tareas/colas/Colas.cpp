@@ -15,7 +15,7 @@ struct Node
     int priority;
 };
 
-//* Prototype for the function
+//* Prototipo de Función
 void Enqueue(Node *&, Node *&, int, int);
 void Dequeue(Node *&, Node *&, int &);
 void DisplayStack(Node *);
@@ -36,6 +36,7 @@ int main(int argc, char const *argv[])
 
     while (true)
     {
+        //*Menu de inicio
         cout << "Menu:" << endl;
         cout << "1. Enqueue" << endl;
         cout << "2. Dequeue" << endl;
@@ -52,8 +53,9 @@ int main(int argc, char const *argv[])
             for (int i = 0; i < cantElements; i++)
             {
                 cout << "Desea que su numero tenga prioridad?\n"
-                     << "1\n"
-                     << "2\n";
+                     << "1. Si\n"
+                     << "2. No\n"
+                     << "Opcion: ";
 
                 isDigit(priority);
 
@@ -124,7 +126,7 @@ void Enqueue(Node *&front, Node *&end, int n, int priority)
     Node *newNode = new Node();
 
     newNode->data = n;
-    newNode->priority;
+    newNode->priority = priority;
     newNode->next = NULL;
 
     if (empty_queue(front))
@@ -133,31 +135,27 @@ void Enqueue(Node *&front, Node *&end, int n, int priority)
     }
     else
     {
-        end->next = newNode;
-        if (front -> priority > priority)
+        if (front->priority > priority)
         {
-            newNode -> next = front;
+            newNode->next = front;
             front = newNode;
         }
         else
         {
-            //*Este se va a ir desplazando atraves de la cola hasta que encuentre un nodo con 
+            //*Este se va a ir desplazando atraves de la cola hasta que encuentre un nodo con
             //*una prioridad menor o igual a la del nuevo Nodo
             Node *index = front;
 
             while (index->next != NULL && index->next->priority <= priority)
             {
-                index = index ->next;
+                index = index->next;
             }
             newNode->next = index->next;
             index->next = newNode;
         }
-        
     }
 
-    end = newNode;
-
-    cout << "Elemento " << n << " insertado a la cola correctamente." << endl;
+    cout << "Elemento " << n << " insertado a la cola correctamente. con una prioridad: " << priority << endl;
 }
 
 void Dequeue(Node *&front, Node *&end, int &n)
@@ -187,24 +185,18 @@ void DisplayStack(Node *first)
     cout << "Elementos de queue: " << endl;
     while (first != NULL)
     {
-        cout << number << ". " << first->data << endl;
+        cout <<"Number: " << number << ". " << first->data << "Prioridad: " << first->priority << endl;
         first = first->next;
         number++;
     }
 }
 
-// function to determine if the queue is empty or not
+/// @brief  function to determine if the queue is empty or not
+/// @param front
+/// @return true if queue is empty
 bool empty_queue(Node *front)
 {
     return (front == NULL) ? true : false;
-}
-
-/// @brief function for char to int
-/// @param c
-/// @return if available, the char represented in an int
-int charToInt(char c)
-{
-    return c - '0';
 }
 
 /// @brief confirm if this conditional is a digit

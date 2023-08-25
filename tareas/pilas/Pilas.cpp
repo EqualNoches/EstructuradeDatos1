@@ -25,7 +25,7 @@ int main(int argc, char const *argv[])
     int intentos = 0;
     int choice;
     int newNumber;
-    
+
     while (true)
     {
         cout << "Menu:" << endl;

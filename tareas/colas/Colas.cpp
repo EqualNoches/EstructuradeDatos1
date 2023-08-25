@@ -1,3 +1,10 @@
+/*
+
+
+*/
+
+
+
 #include <iostream>
 #include <stdio.h>
 
@@ -7,10 +14,11 @@ struct Node
 {
     int data;
     Node *next;
+    int priority;
 };
 
 //* Prototype for the function
-void Enqueue(Node *&, Node *&, int);
+void Enqueue(Node *&, Node *&, int, int);
 void Dequeue(Node *&, Node *&, int &);
 void DisplayStack(Node *);
 bool empty_queue(Node *);
@@ -26,7 +34,7 @@ int main(int argc, char const *argv[])
     int position = 1;
     int intentos = 0;
     int choice;
-    int newNumber;
+    int priority;
 
     while (true)
     {
@@ -45,9 +53,35 @@ int main(int argc, char const *argv[])
             isDigit(cantElements);
             for (int i = 0; i < cantElements; i++)
             {
-                cout << "Digite un numero: ";
-                isDigit(data);
-                Enqueue(front, end, data);
+                cout << "Desea que su numero tenga prioridad?\n"
+                     << "1\n"
+                     << "2\n";
+                
+                isDigit(priority);
+
+                switch (priority)
+                {
+                case 1:
+                    cout << "Que tipo de prioridad desea que tenga este numero?";
+                    isDigit(priority);
+                    cout << "Digite un numero: ";
+                    isDigit(data);
+                    Enqueue(front,end,data,priority);
+                    break;
+
+                case 2:
+                    cout << "Digite un numero: ";
+                    isDigit(data);
+                    priority = 16;
+                    Enqueue(front, end, data,priority);
+                    break;
+                
+                default:
+                    cout << "Solo introduzca 1 o 2";
+                    break;
+                }
+
+                
             }
             break;
 
@@ -89,12 +123,15 @@ int main(int argc, char const *argv[])
 }
 
 //* Function to insert elements into a queue
-void Enqueue(Node *&front, Node *&end, int n)
+void Enqueue(Node *&front, Node *&end, int n, int priority)
 {
     Node *newNode = new Node();
 
     newNode->data = n;
+    newNode->priority;
     newNode->next = NULL;
+
+
 
     if (empty_queue(front))
     {

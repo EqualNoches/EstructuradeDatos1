@@ -25,8 +25,8 @@ int main(int argc, char const *argv[])
     int intentos = 0;
     int choice;
     int newNumber;
-
-    do
+    
+    while (true)
     {
         cout << "Menu:" << endl;
         cout << "1. Push" << endl;
@@ -85,7 +85,7 @@ int main(int argc, char const *argv[])
             choice = 4;
             break;
         }
-    } while (choice != 4);
+    }
 
     return 0;
 }

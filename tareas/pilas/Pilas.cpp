@@ -68,10 +68,12 @@ int main(int argc, char const *argv[])
 
             while (stack != NULL) //* while the elements inside the stack are not equal to NUll
             {
-                Pop(stack, finalData);
+
                 if (stack != NULL)
                 {
-                    cout << position << ". " << data << "\n";
+                    Pop(stack, finalData);
+                    cout << position << ". " << finalData << "\n";
+
                 }
                 else
                 {

@@ -2,7 +2,7 @@
 
 Este Repositorio incluirá todos las tareas de La clase Estructura de Datos 1.
 
-## Estos son los comandos que deben utilizar para subir y traer los cambios.
+## Estos son los comandos que deben utilizar para subir los cambios.
 
  - git status -> para saber cuales archivos tienen cambios
  - git add "Nombre de la carpeta".

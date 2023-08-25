@@ -14,22 +14,21 @@ void Enqueue(Node *&, Node *&, int);
 void Dequeue(Node *&, Node *&, int &);
 void DisplayStack(Node *);
 bool empty_queue(Node *);
-bool isDigit(char);
+void isDigit(int &);
 int charToInt(char);
 
 int main(int argc, char const *argv[])
 {
     Node *front = NULL;
     Node *end = NULL;
-    char data;
-    int finalData;
-    char cantElements;
+    int data;
+    int cantElements;
     int position = 1;
     int intentos = 0;
     int choice;
     int newNumber;
 
-    do
+    while (true)
     {
         cout << "Menu:" << endl;
         cout << "1. Enqueue" << endl;
@@ -37,30 +36,18 @@ int main(int argc, char const *argv[])
         cout << "3. Display Stack" << endl;
         cout << "4. Exit" << endl;
         cout << "Enter your choice: ";
-        cin >> choice;
+        isDigit(choice);
 
         switch (choice)
         {
         case 1:
             cout << "Cuantos elementos quieres agregar a esta cola?: ";
-            cin >> cantElements;
-            newNumber = charToInt(cantElements);
-            if (isDigit(cantElements))
+            isDigit(cantElements);
+            for (int i = 0; i < cantElements; i++)
             {
-                for (int i = 0; i < newNumber; i++)
-                {
-                    cout << "Digite un numero: ";
-                    cin >> data;
-                    finalData = charToInt(data);
-                    if (isDigit(data))
-                    {
-                        Enqueue(front, end, finalData);
-                    }
-                    else if (!isDigit(data))
-                    {
-                        cout << "Recuerde solo poner numeros\n";
-                    }
-                }
+                cout << "Digite un numero: ";
+                isDigit(data);
+                Enqueue(front, end, data);
             }
             break;
 
@@ -70,14 +57,14 @@ int main(int argc, char const *argv[])
 
             while (front != NULL) //* while the elements inside the stack are not equal to NUll
             {
-                Dequeue(front, end, finalData);
+                Dequeue(front, end, data);
                 if (front != NULL)
                 {
-                    cout << position << ". " << finalData << "\n";
+                    cout << position << ". " << data << "\n";
                 }
                 else
                 {
-                    cout << position << ". " << finalData << "\n";
+                    cout << position << ". " << data << "\n";
                 }
                 position++;
             }
@@ -92,11 +79,11 @@ int main(int argc, char const *argv[])
             exit(0);
 
         default:
-            cout << "Invalid choice. Please enter a valid option." << endl;
+            cout << "introduzca un valor valido" << endl;
             choice = 4;
             break;
         }
-    } while (choice != 4);
+    }
 
     return 0;
 }
@@ -172,8 +159,13 @@ int charToInt(char c)
 
 /// @brief confirm if this conditional is a digit
 /// @param c
-/// @return if is digit true, else false
-bool isDigit(char c)
+/// @return if is going to check if the operation is successfull
+void isDigit(int &i)
 {
-    return c >= '0' && c <= '9';
+    while (!(cin >> i))
+    {
+        cout << "Porfavor introduzca un valor valido.";
+        cin.clear();
+        cin.ignore(123, '\n');
+    }
 }

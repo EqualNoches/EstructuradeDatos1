@@ -12,16 +12,15 @@ struct Node
 
 void Push(Node *&, int); //* References for the functions
 void Pop(Node *&, int &);
-bool isDigit(char);
+void isDigit(int &);
 int charToInt(char c);
 void DisplayStack(Node *stack);
 
 int main(int argc, char const *argv[])
 {
     Node *stack = NULL;
-    char data;
-    int finalData;
-    char cantElements;
+    int data;
+    int cantElements;
     int position = 1;
     int intentos = 0;
     int choice;
@@ -35,30 +34,19 @@ int main(int argc, char const *argv[])
         cout << "3. Display Stack" << endl;
         cout << "4. Exit" << endl;
         cout << "Enter your choice: ";
-        cin >> choice;
+        isDigit(choice);
 
         switch (choice)
         {
         case 1:
             cout << "Cuantos elementos quieres agregar a esta pila?: ";
-            cin >> cantElements;
-            newNumber = charToInt(cantElements);
-            if (isDigit(cantElements))
+            isDigit(cantElements);
+            for (int i = 0; i < cantElements; i++)
             {
-                for (int i = 0; i < newNumber; i++)
-                {
-                    cout << "Digite un numero: ";
-                    cin >> data;
-                    finalData = charToInt(data);
-                    if (isDigit(data))
-                    {
-                        Push(stack, finalData);
-                    }
-                    else if (!isDigit(data))
-                    {
-                        cout << "Recuerde solo poner numeros\n";
-                    }
-                }
+                cout << "Digite un numero: ";
+                isDigit(data);
+                cout << data;
+                Push(stack, data);
             }
             break;
 
@@ -71,8 +59,8 @@ int main(int argc, char const *argv[])
 
                 if (stack != NULL)
                 {
-                    Pop(stack, finalData);
-                    cout << position << ". " << finalData << "\n";
+                    Pop(stack, data);
+                    cout << position << ". " << data << "\n";
 
                 }
                 else
@@ -90,6 +78,7 @@ int main(int argc, char const *argv[])
         case 4:
             cout << "Saliendo del programa." << endl;
             exit(0);
+            break;
 
         default:
             cout << "Opción invalida, solo puede elegir digitos del 1 - 4." << endl;
@@ -147,9 +136,14 @@ void DisplayStack(Node *stack)
 /// @brief my own isDigit implementation
 /// @param i
 /// @return true or false
-bool isDigit(char c)
+void isDigit(int &i)
 {
-    return c >= '0' && c <= '9';
+    while (!(cin >> i))
+    {
+        cout << "Porfavor introduzca un valor valido.";
+        cin.clear();
+        cin.ignore(123, '\n');
+    }   
 }
 
 /// @brief normal char to int method

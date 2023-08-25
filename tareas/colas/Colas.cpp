@@ -3,8 +3,6 @@
 
 */
 
-
-
 #include <iostream>
 #include <stdio.h>
 
@@ -56,32 +54,30 @@ int main(int argc, char const *argv[])
                 cout << "Desea que su numero tenga prioridad?\n"
                      << "1\n"
                      << "2\n";
-                
+
                 isDigit(priority);
 
                 switch (priority)
                 {
-                case 1:
+                case 1: //*si es Caso uno, preguntará por prioridad
                     cout << "Que tipo de prioridad desea que tenga este numero?";
                     isDigit(priority);
                     cout << "Digite un numero: ";
                     isDigit(data);
-                    Enqueue(front,end,data,priority);
+                    Enqueue(front, end, data, priority);
                     break;
 
-                case 2:
+                case 2: //*Si es caso 2, agrega prioridad automaticamente.
                     cout << "Digite un numero: ";
                     isDigit(data);
                     priority = 16;
-                    Enqueue(front, end, data,priority);
+                    Enqueue(front, end, data, priority);
                     break;
-                
+
                 default:
                     cout << "Solo introduzca 1 o 2";
                     break;
                 }
-
-                
             }
             break;
 
@@ -131,8 +127,6 @@ void Enqueue(Node *&front, Node *&end, int n, int priority)
     newNode->priority;
     newNode->next = NULL;
 
-
-
     if (empty_queue(front))
     {
         front = newNode;
@@ -140,6 +134,25 @@ void Enqueue(Node *&front, Node *&end, int n, int priority)
     else
     {
         end->next = newNode;
+        if (front -> priority > priority)
+        {
+            newNode -> next = front;
+            front = newNode;
+        }
+        else
+        {
+            //*Este se va a ir desplazando atraves de la cola hasta que encuentre un nodo con 
+            //*una prioridad menor o igual a la del nuevo Nodo
+            Node *index = front;
+
+            while (index->next != NULL && index->next->priority <= priority)
+            {
+                index = index ->next;
+            }
+            newNode->next = index->next;
+            index->next = newNode;
+        }
+        
     }
 
     end = newNode;

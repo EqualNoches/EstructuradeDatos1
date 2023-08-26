@@ -1,6 +1,36 @@
+/*
+Una pila (stack) es una estructura de datos en donde el último en entrar es el primero en salir.
+Construir un programa C++ que simule una pila, utilizando una estructura de datos como la que
+sigue para los nodos:
+
+struct Pila {
+    int dato;
+    Pila *next;
+    };
+
+RESTRICCIONES:
+    A. La pila debe poder realizar las operaciones de Push y Pop.
+    B. Tener en consideración de desplegar un mensaje de “Empty Stack”, cuando se trate de
+        hacer un Pop cuando la pila este vacía.
+    C. El programa debe tener un menú para realizar las operaciones de Push, Pop y Desplegar
+        toda la pila realizando Pops hasta el último nodo. Además, debe tener una opción de
+        salir del programa
+
+Participantes:
+ #. Name - ID
+
+ 1. Edward Díaz - ID:1115808
+ 2. Hector Wittkop - ID:1115754
+ 3. Alexander Gil - ID:1116763
+ 4. Juan Ortiz - ID:1115143
+ 5. Jose de la Cruz - ID:1113682
+ 6. Erick Saviñon - ID:1115161
+
+ Fecha: 25/8/2023
+*/
+
 #include <iostream>
 #include <stdlib.h>
-#include <ctype.h>
 
 using namespace std;
 
@@ -28,31 +58,31 @@ int main(int argc, char const *argv[])
 
     while (true)
     {
-        cout << "Menu:" << endl;
-        cout << "1. Push" << endl;
-        cout << "2. Pop" << endl;
-        cout << "3. Display Stack" << endl;
-        cout << "4. Exit" << endl;
-        cout << "Enter your choice: ";
+        cout << "\nMenu:" << endl
+             << "1. Push" << endl
+             << "2. Pop" << endl
+             << "3. Display Stack" << endl
+             << "4. Exit" << endl
+             << "Elección: ";
+
         isDigit(choice);
 
         switch (choice)
         {
         case 1:
-            cout << "Cuantos elementos quieres agregar a esta pila?: ";
+            cout << "\nCuantos elementos quieres agregar a esta pila?: ";
             isDigit(cantElements);
             for (int i = 0; i < cantElements; i++)
             {
                 cout << "Digite un numero: ";
                 isDigit(data);
-                cout << data;
                 Push(stack, data);
             }
             break;
 
         case 2:
             cout << "\nEliminando elementos de la pila" << endl;
-            cout << "Recuerde que los elementos saldran LIFA (Last in First Out)" << endl;
+            cout << "Recuerde que los elementos saldran LIFA (Last in First Out)\n" << endl;
 
             while (stack != NULL) //* while the elements inside the stack are not equal to NUll
             {
@@ -61,7 +91,6 @@ int main(int argc, char const *argv[])
                 {
                     Pop(stack, data);
                     cout << position << ". " << data << "\n";
-
                 }
                 else
                 {
@@ -99,7 +128,7 @@ void Push(Node *&stack, int n)
     new_node->data = n;
     new_node->next = stack;
     stack = new_node;
-    cout << "Elemento " << n << " agregado A la pila correctamente" << endl;
+    cout << "\nElemento " << n << " agregado A la pila correctamente\n" << endl;
 }
 
 /// @brief Method in charge of pulling out of the stack
@@ -120,7 +149,7 @@ void DisplayStack(Node *stack)
     int number = 1;
     if (stack == NULL)
     {
-        cout << "Empty Stack." << endl;
+        cout << "\nEmpty Stack." << endl;
         return;
     }
 
@@ -140,16 +169,10 @@ void isDigit(int &i)
 {
     while (!(cin >> i))
     {
-        cout << "Porfavor introduzca un valor valido.";
+        // Como funciona es muy sencillo. Solamente valida si la entrada a ese tipo de dato es valida. Si no lo es, manda false
+        cout << "\nPorfavor introduzca un valor valido.\n"
+             << "Intente nuevamente: ";
         cin.clear();
         cin.ignore(123, '\n');
-    }   
-}
-
-/// @brief normal char to int method
-/// @param c
-/// @return the written character comes back as an int
-int charToInt(char c)
-{
-    return c - '0';
+    }
 }

@@ -1,5 +1,38 @@
 /*
+Realizar un programa C++ que simule una Cola (Queue).
 
+Una Cola (Queue) es una estructura de datos en donde el primero en entrar es el primero en salir. Para 
+nuestro caso, haremos el problema un poco mas complejo añadiéndole lo que se conoce como 
+prioridad. En los casos en que una Cola tiene prioridad se considera esta al momento de insertar un 
+nuevo nodo a la estructura. La Cola tiene la siguiente forma para los nodos:
+
+struct Queue { 
+ int dato; 
+ Queue *next; 
+}; 
+
+RESTRICCIONES:
+
+    A. La Cola debe poder realizar las operaciones Enqueue y Dequeue. 
+    B. Las prioridades van de 0 a 16. En los casos que el usuario decida una prioridad más alta que 16 se 
+    considerara la default, y se insertara el nuevo nodo al final de la estructura.
+    C. El programa deberá tener un menu con las opciones para Enqueue y Dequeue, además de poder 
+    desplegar todos los elementos de la cola, provocando Dequeue de toda la estructura Cola.
+    D. Las entradas de datos del usuario deben ser debidamente validas.
+    E. El programas debe ser lo suficientemente especializado para informar al usuario cuando la cola esta 
+    vacía
+
+Participantes: 
+ #. Name - ID
+
+ 1. Edward Díaz - ID:1115808
+ 2. Hector Wittkop - ID:1115754
+ 3. Alexander Gil - ID:1116763
+ 4. Juan Ortiz - ID:1115143
+ 5. Jose de la Cruz - ID:1113682
+ 6. Erick Saviñon - ID:1115161
+
+ Fecha: 25/8/2023
 
 */
 
@@ -21,7 +54,6 @@ void Dequeue(Node *&, Node *&, int &);
 void DisplayStack(Node *);
 bool empty_queue(Node *);
 void isDigit(int &);
-int charToInt(char);
 
 int main(int argc, char const *argv[])
 {
@@ -37,7 +69,7 @@ int main(int argc, char const *argv[])
     while (true)
     {
         //*Menu de inicio
-        cout << "Menu:" << endl;
+        cout << "\nMenu:" << endl;
         cout << "1. Enqueue" << endl;
         cout << "2. Dequeue" << endl;
         cout << "3. Display Stack" << endl;
@@ -52,7 +84,7 @@ int main(int argc, char const *argv[])
             isDigit(cantElements);
             for (int i = 0; i < cantElements; i++)
             {
-                cout << "Desea que su numero tenga prioridad?\n"
+                cout << "\nDesea que su numero tenga prioridad?\n"
                      << "1. Si\n"
                      << "2. No\n"
                      << "Opcion: ";
@@ -62,9 +94,9 @@ int main(int argc, char const *argv[])
                 switch (priority)
                 {
                 case 1: //*si es Caso uno, preguntará por prioridad
-                    cout << "Que tipo de prioridad desea que tenga este numero?";
+                    cout << "Que tipo de prioridad desea que tenga este numero?: ";
                     isDigit(priority);
-                    cout << "Digite un numero: ";
+                    cout << "\nDigite un numero: ";
                     isDigit(data);
                     Enqueue(front, end, data, priority);
                     break;
@@ -146,7 +178,8 @@ void Enqueue(Node *&front, Node *&end, int n, int priority)
             //*una prioridad menor o igual a la del nuevo Nodo
             Node *index = front;
 
-            while (index->next != NULL && index->next->priority <= priority)
+            // 
+            while (index->next != NULL && index->next->priority <= priority) 
             {
                 index = index->next;
             }
@@ -155,7 +188,7 @@ void Enqueue(Node *&front, Node *&end, int n, int priority)
         }
     }
 
-    cout << "Elemento " << n << " insertado a la cola correctamente. con una prioridad: " << priority << endl;
+    cout << "\nElemento " << n << " insertado a la cola correctamente. con una prioridad: " << priority << endl;
 }
 
 void Dequeue(Node *&front, Node *&end, int &n)
@@ -185,7 +218,7 @@ void DisplayStack(Node *first)
     cout << "Elementos de queue: " << endl;
     while (first != NULL)
     {
-        cout <<"Number: " << number << ". " << first->data << "Prioridad: " << first->priority << endl;
+        cout <<" | "<< number << ". "<<" | Number: "  << first->data << " | Prioridad: " << first->priority << " | "<<  endl;
         first = first->next;
         number++;
     }

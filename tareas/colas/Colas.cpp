@@ -48,7 +48,7 @@ struct Node
     int priority;
 };
 
-//* Prototipo de Función
+//* Prototipos de Funciones
 void Enqueue(Node *&, Node *&, int, int);
 void Dequeue(Node *&, Node *&, int &);
 void DisplayStack(Node *);
@@ -153,6 +153,11 @@ int main(int argc, char const *argv[])
 }
 
 //* Function to insert elements into a queue
+/// @brief Function in charge of Adding elements to the queue
+/// @param front
+/// @param end
+/// @param n
+/// @param priority
 void Enqueue(Node *&front, Node *&end, int n, int priority)
 {
     Node *newNode = new Node();
@@ -178,8 +183,7 @@ void Enqueue(Node *&front, Node *&end, int n, int priority)
             //*una prioridad menor o igual a la del nuevo Nodo
             Node *index = front;
 
-            // 
-            while (index->next != NULL && index->next->priority <= priority) 
+            while (index->next != NULL && index->next->priority <= priority)
             {
                 index = index->next;
             }
@@ -187,10 +191,12 @@ void Enqueue(Node *&front, Node *&end, int n, int priority)
             index->next = newNode;
         }
     }
-
     cout << "\nElemento " << n << " insertado a la cola correctamente. con una prioridad: " << priority << endl;
 }
-
+/// @brief This method is in charge of deleting data to the corresponding queue
+/// @param front 
+/// @param end 
+/// @param n 
 void Dequeue(Node *&front, Node *&end, int &n)
 {
     n = front->data;
@@ -232,9 +238,9 @@ bool empty_queue(Node *front)
     return (front == NULL) ? true : false;
 }
 
-/// @brief confirm if this conditional is a digit
+/// @brief confirm if this conditional is a digit by macking the "cin" inside of the function
 /// @param c
-/// @return if is going to check if the operation is successfull
+/// @return if the operation is succesfull it will return a true, else it will return false
 void isDigit(int &i)
 {
     while (!(cin >> i))

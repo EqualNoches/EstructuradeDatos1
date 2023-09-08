@@ -53,7 +53,7 @@ void Enqueue(Node *&, Node *&, int, int);
 void Dequeue(Node *&, Node *&, int &);
 void DisplayStack(Node *);
 bool empty_queue(Node *);
-void isDigit(int &);
+void IsDigit(int &);
 
 int main(int argc, char const *argv[])
 {
@@ -75,13 +75,13 @@ int main(int argc, char const *argv[])
         cout << "3. Display Stack" << endl;
         cout << "4. Exit" << endl;
         cout << "Enter your choice: ";
-        isDigit(choice);
+        IsDigit(choice);
 
         switch (choice)
         {
         case 1:
             cout << "Cuantos elementos quieres agregar a esta cola?: ";
-            isDigit(cantElements);
+            IsDigit(cantElements);
             for (int i = 0; i < cantElements; i++)
             {
                 cout << "\nDesea que su numero tenga prioridad?\n"
@@ -89,21 +89,21 @@ int main(int argc, char const *argv[])
                      << "2. No\n"
                      << "Opcion: ";
 
-                isDigit(priority);
+                IsDigit(priority);
 
                 switch (priority)
                 {
                 case 1: //*si es Caso uno, preguntará por prioridad
                     cout << "Que tipo de prioridad desea que tenga este numero?: ";
-                    isDigit(priority);
+                    IsDigit(priority);
                     cout << "\nDigite un numero: ";
-                    isDigit(data);
+                    IsDigit(data);
                     Enqueue(front, end, data, priority);
                     break;
 
                 case 2: //*Si es caso 2, agrega prioridad automaticamente.
                     cout << "Digite un numero: ";
-                    isDigit(data);
+                    IsDigit(data);
                     priority = 16;
                     Enqueue(front, end, data, priority);
                     break;
@@ -240,8 +240,11 @@ bool empty_queue(Node *front)
 
 /// @brief confirm if this conditional is a digit by macking the "cin" inside of the function
 /// @param c
+
+/// @return if is going to check if the operation is successfull
+void IsDigit(int &i)
 /// @return if the operation is succesfull it will return a true, else it will return false
-void isDigit(int &i)
+
 {
     while (!(cin >> i))
     {

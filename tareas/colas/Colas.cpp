@@ -124,7 +124,11 @@ int main(int argc, char const *argv[])
             break;
 
         case 2:
-            if (!empty_queue)
+            if (front == NULL)
+            {
+                cout << "\nEmpty Queue" << endl;
+            }
+            else
             {
                 cout << "\nEliminando elementos de la cola" << endl;
                 cout << "Recuerde que los elementos saldran FiFo (First in First Out)" << endl;
@@ -141,14 +145,9 @@ int main(int argc, char const *argv[])
                     }
                     position++;
                 }
-                psInfo = 0;
             }
-            else
-            {
-                cout << "\nLa cola esta vacia" << endl;
-            }
+            psInfo = 0;
             break;
-
         case 3:
             DisplayStack(front);
             break;
@@ -168,7 +167,7 @@ int main(int argc, char const *argv[])
 }
 
 //* Function to insert elements into a queue
-/// @brief Function in charge of Adding elements to the queue
+/// @brief Funcion encargada de agregar elementos a la cola
 /// @param front
 /// @param end
 /// @param psInfo

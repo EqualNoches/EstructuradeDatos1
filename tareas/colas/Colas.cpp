@@ -1,28 +1,28 @@
 /*
 Realizar un programa C++ que simule una Cola (Queue).
 
-Una Cola (Queue) es una estructura de datos en donde el primero en entrar es el primero en salir. Para 
-nuestro caso, haremos el problema un poco mas complejo añadiéndole lo que se conoce como 
-prioridad. En los casos en que una Cola tiene prioridad se considera esta al momento de insertar un 
+Una Cola (Queue) es una estructura de datos en donde el primero en entrar es el primero en salir. Para
+nuestro caso, haremos el problema un poco mas complejo añadiéndole lo que se conoce como
+prioridad. En los casos en que una Cola tiene prioridad se considera esta al momento de insertar un
 nuevo nodo a la estructura. La Cola tiene la siguiente forma para los nodos:
 
-struct Queue { 
- int dato; 
- Queue *next; 
-}; 
+struct Queue {
+ int dato;
+ Queue *next;
+};
 
 RESTRICCIONES:
 
-    A. La Cola debe poder realizar las operaciones Enqueue y Dequeue. 
-    B. Las prioridades van de 0 a 16. En los casos que el usuario decida una prioridad más alta que 16 se 
+    A. La Cola debe poder realizar las operaciones Enqueue y Dequeue.
+    B. Las prioridades van de 0 a 16. En los casos que el usuario decida una prioridad más alta que 16 se
     considerara la default, y se insertara el nuevo nodo al final de la estructura.
-    C. El programa deberá tener un menu con las opciones para Enqueue y Dequeue, además de poder 
+    C. El programa deberá tener un menu con las opciones para Enqueue y Dequeue, además de poder
     desplegar todos los elementos de la cola, provocando Dequeue de toda la estructura Cola.
     D. Las entradas de datos del usuario deben ser debidamente validas.
-    E. El programas debe ser lo suficientemente especializado para informar al usuario cuando la cola esta 
+    E. El programas debe ser lo suficientemente especializado para informar al usuario cuando la cola esta
     vacía
 
-Participantes: 
+Participantes:
  #. Name - ID
 
  1. Edward Díaz - ID:1115808
@@ -49,7 +49,7 @@ struct Node
 };
 
 //* Prototipos de Funciones
-void Enqueue(Node *&, Node *&, int, int);
+void Enqueue(Node *&, Node *&, int, int, int);
 void Dequeue(Node *&, Node *&, int &);
 void DisplayStack(Node *);
 bool empty_queue(Node *);
@@ -63,6 +63,7 @@ int main(int argc, char const *argv[])
     int cantElements;
     int position = 1;
     int intentos = 0;
+    int psInfo = 0;
     int choice;
     int priority;
 
@@ -98,14 +99,20 @@ int main(int argc, char const *argv[])
                     IsDigit(priority);
                     cout << "\nDigite un numero: ";
                     IsDigit(data);
-                    Enqueue(front, end, data, priority);
+                    if (priority > 16)
+                    {
+                        priority = 16;
+                    }
+                    Enqueue(front, end, psInfo, data, priority);
+                    psInfo++;
                     break;
 
                 case 2: //*Si es caso 2, agrega prioridad automaticamente.
                     cout << "Digite un numero: ";
                     IsDigit(data);
                     priority = 16;
-                    Enqueue(front, end, data, priority);
+                    Enqueue(front, end, psInfo, data, priority);
+                    psInfo++;
                     break;
 
                 default:
@@ -113,24 +120,32 @@ int main(int argc, char const *argv[])
                     break;
                 }
             }
+            psInfo++;
             break;
 
         case 2:
-            cout << "\nEliminando elementos de la cola" << endl;
-            cout << "Recuerde que los elementos saldran FiFo (First in First Out)" << endl;
-
-            while (front != NULL) //* while the elements inside the stack are not equal to NUll
+            if (!empty_queue)
             {
-                Dequeue(front, end, data);
-                if (front != NULL)
+                cout << "\nEliminando elementos de la cola" << endl;
+                cout << "Recuerde que los elementos saldran FiFo (First in First Out)" << endl;
+                while (front != NULL) //* while the elements inside the stack are not equal to NUll
                 {
-                    cout << position << ". " << data << "\n";
+                    Dequeue(front, end, data);
+                    if (front != NULL)
+                    {
+                        cout << position << ". " << data << "\n";
+                    }
+                    else
+                    {
+                        cout << position << ". " << data << "\n";
+                    }
+                    position++;
                 }
-                else
-                {
-                    cout << position << ". " << data << "\n";
-                }
-                position++;
+                psInfo = 0;
+            }
+            else
+            {
+                cout << "\nLa cola esta vacia" << endl;
             }
             break;
 
@@ -156,10 +171,12 @@ int main(int argc, char const *argv[])
 /// @brief Function in charge of Adding elements to the queue
 /// @param front
 /// @param end
+/// @param psInfo
 /// @param n
 /// @param priority
-void Enqueue(Node *&front, Node *&end, int n, int priority)
+void Enqueue(Node *&front, Node *&end, int psInfo, int n, int priority)
 {
+    int current_priority;
     Node *newNode = new Node();
 
     newNode->data = n;
@@ -169,34 +186,41 @@ void Enqueue(Node *&front, Node *&end, int n, int priority)
     if (empty_queue(front))
     {
         front = newNode;
+        end = newNode;
     }
     else
     {
-        if (front->priority > priority)
+        if (priority == 0)
         {
+            // Si la prioridad es igual a 0, el nuevo elemento se moverá enfrente
             newNode->next = front;
             front = newNode;
         }
         else
         {
-            //*Este se va a ir desplazando atraves de la cola hasta que encuentre un nodo con
-            //*una prioridad menor o igual a la del nuevo Nodo
-            Node *index = front;
-
-            while (index->next != NULL && index->next->priority <= priority)
+            current_priority = front->priority;
+            for (int i = 0; i < psInfo; i++)
             {
-                index = index->next;
+                if (priority <= current_priority)
+                {
+                    newNode->next = front->next;
+                    front->next = newNode;
+                    break;
+                }
+                else
+                {
+                    current_priority = front->next->priority;
+                    front = front->next;
+                }
             }
-            newNode->next = index->next;
-            index->next = newNode;
         }
     }
     cout << "\nElemento " << n << " insertado a la cola correctamente. con una prioridad: " << priority << endl;
 }
 /// @brief This method is in charge of deleting data to the corresponding queue
-/// @param front 
-/// @param end 
-/// @param n 
+/// @param front
+/// @param end
+/// @param n
 void Dequeue(Node *&front, Node *&end, int &n)
 {
     n = front->data;
@@ -224,7 +248,8 @@ void DisplayStack(Node *first)
     cout << "Elementos de queue: " << endl;
     while (first != NULL)
     {
-        cout <<" | "<< number << ". "<<" | Number: "  << first->data << " | Prioridad: " << first->priority << " | "<<  endl;
+        cout << " | " << number << ". "
+             << " | Number: " << first->data << " | Prioridad: " << first->priority << " | " << endl;
         first = first->next;
         number++;
     }
@@ -239,12 +264,9 @@ bool empty_queue(Node *front)
 }
 
 /// @brief confirm if this conditional is a digit by macking the "cin" inside of the function
-/// @param c
-
+/// @param i
 /// @return if is going to check if the operation is successfull
 void IsDigit(int &i)
-/// @return if the operation is succesfull it will return a true, else it will return false
-
 {
     while (!(cin >> i))
     {

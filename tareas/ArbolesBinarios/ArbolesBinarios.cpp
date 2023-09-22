@@ -290,9 +290,18 @@ struct Node *EliminarElemento(struct Node *root, int data)
         // caso 3: En el caso de 2 hijos
         else
         {
-            struct Node *temp = FindMin(root->derecha);
-            root->data = temp->data;
-            root->derecha = EliminarElemento(root->derecha, temp->data);
+            if(root->derecha->izquierda)//si el nodo derecha tiene izquierda
+            {
+                Node *temp = FindMin(root->derecha);
+                root->data = temp->data;
+                root->derecha = EliminarElemento(root->derecha, temp->data);
+            }
+            else if (root->izquierda)
+            {
+                Node *temp = FindMax(root->izquierda);
+                root->data = temp->data;
+                root->izquierda = EliminarElemento(root->izquierda, temp->data);
+            }
         }
     }
     return root;

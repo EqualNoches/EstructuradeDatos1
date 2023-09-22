@@ -2,21 +2,21 @@
 Tarea 7. Gestión de un Árbol Binario de Búsqueda.
 Fecha de Entrega: 22 de Septiembre 2022, horario de Laboratorio 20/22
 
-Realizar un programa C++ que permita gestionar un Árbol Binario de Búsqueda. El programa 
-debe permitir insertar, buscar y eliminar un nodo; además de presentar (utilizando cualquiera 
+Realizar un programa C++ que permita gestionar un Árbol Binario de Búsqueda. El programa
+debe permitir insertar, buscar y eliminar un nodo; además de presentar (utilizando cualquiera
 de los recorridos) el árbol de acuerdo a las reglas que existen para el árbol binario de búsqueda.
 
 RESTRICCIONES:
     A. El primer nodo siempre será el root.
-    B. Al presentar el árbol debe ser de un modo intuitivo, que muestre la topología de forma 
-        que represente en árbol. 
-    C. Puede utilizar cualquiera de los recorridos para arboles (InOrden, PreOrden o 
+    B. Al presentar el árbol debe ser de un modo intuitivo, que muestre la topología de forma
+        que represente en árbol.
+    C. Puede utilizar cualquiera de los recorridos para arboles (InOrden, PreOrden o
         PostOrden).
-    D. Al eliminar un nodo debe observar las reglas para la sustitución del nodo, permitiendo 
+    D. Al eliminar un nodo debe observar las reglas para la sustitución del nodo, permitiendo
         así que el árbol se reconstruya.
-    E. Al insertar un nodo deben observarse las reglas para arboles binarios de búsqueda, es 
-        decir, los nodos cuyo valor sea mayor que el nodo raíz a la derecha (en el subárbol 
-        derecho), en caso contrario a la izquierda (en el subárbol izquierdo). Recordando que 
+    E. Al insertar un nodo deben observarse las reglas para arboles binarios de búsqueda, es
+        decir, los nodos cuyo valor sea mayor que el nodo raíz a la derecha (en el subárbol
+        derecho), en caso contrario a la izquierda (en el subárbol izquierdo). Recordando que
         deben ocupar el lugar que le corresponda según la topología del árbol.
 
 Participantes:
@@ -28,6 +28,41 @@ Participantes:
  4. Juan Ortiz - ID:1115143
  5. Jose de la Cruz - ID:1113682
  6. Erick Saviñon - ID:1115161
+
+*/
+
+/*
+
+Realizar un programa C++ que permita gestionar un Árbol Binario de Búsqueda. El programa
+debe permitir insertar, buscar y eliminar un nodo; además de presentar (utilizando cualquiera
+de los recorridos) el árbol de acuerdo a las reglas que existen para el árbol binario de búsqueda.
+
+
+RESTRICCIONES:
+A. El primer nodo siempre será el root.
+B. Al presentar el árbol debe ser de un modo intuitivo, que muestre la topología de forma
+que represente en árbol.
+C. Puede utilizar cualquiera de los recorridos para arboles (InOrden, PreOrden o
+PostOrden).
+D. Al eliminar un nodo debe observar las reglas para la sustitución del nodo, permitiendo
+así que el árbol se reconstruya.
+E. Al insertar un nodo deben observarse las reglas para arboles binarios de búsqueda, es
+decir, los nodos cuyo valor sea mayor que el nodo raíz a la derecha (en el subárbol
+derecho), en caso contrario a la izquierda (en el subárbol izquierdo). Recordando que
+deben ocupar el lugar que le corresponda según la topología del árbol.
+
+
+Participantes:
+ #. Name - ID
+
+ 1. Edward Díaz - ID:1115808
+ 2. Hector Wittkop - ID:1115754
+ 3. Alexander Gil - ID:1116763
+ 4. Juan Ortiz - ID:1115143
+ 5. Jose de la Cruz - ID:1113682
+ 6. Erick Saviñon - ID:1115161
+
+ Fecha: 22/9/2023
 
 */
 
@@ -49,6 +84,9 @@ Node *InsertarElemento(Node *&, int);
 Node *FindMin(Node *);
 struct Node *EliminarElemento(struct Node *, int);
 void MostrarArbol(Node *, int);
+void preOrden(Node*);
+void inOrden(Node*);
+void postOrden(Node *);
 bool BuscarElemento(Node *, int);
 void isDigit(int &);
 
@@ -70,7 +108,10 @@ int main(int argc, char const *argv[])
              << "2. Buscar elementos en el arbol" << endl
              << "3. Eliminar elemento del arbol" << endl
              << "4. Mostrar Arbol" << endl
-             << "5. Salir" << endl
+             << "5. Pre-Orden"<< endl
+             << "6. In-Orden"<< endl
+             << "7. Post-Orden"<< endl
+             << "8. Salir" << endl
              << "Opcion (1-5): ";
         isDigit(choice);
 
@@ -115,6 +156,26 @@ int main(int argc, char const *argv[])
             // terminar codigo
             break;
         case 5:
+            system("cls");
+            cout << "Pre-Orden";
+            preOrden(root);
+            cout << "\n\n";
+            system("pause");
+            break;
+        case 6:
+            system("cls");
+            cout << "In-Orden";
+            inOrden(root);
+            cout << "\n\n";
+            system("pause");
+            break;
+        case 7:
+            system("cls");
+            cout << "Post-Orden";
+            postOrden(root);
+            system("pause");
+            break;
+        case 8:
             cout << "Saliendo de la aplicación" << endl;
             system("cls");
             exit(0);
@@ -194,7 +255,8 @@ Node *FindMax(Node *root)
 */
 struct Node *EliminarElemento(struct Node *root, int data)
 {
-    if (root == NULL) return root;
+    if (root == NULL)
+        return root;
     else if (data < root->data)
     {
         root->izquierda = EliminarElemento(root->izquierda, data);
@@ -250,6 +312,40 @@ void MostrarArbol(Node *root, int count)
         }
         cout << root->data << endl;
         MostrarArbol(root->izquierda, count + 1);
+    }
+}
+
+void preOrden(Node *root)
+{
+    if (root == NULL) return;
+    else
+    {
+        cout <<root->data<<" - ";
+        preOrden(root->izquierda);
+        preOrden(root->derecha);
+    }
+    
+}
+void inOrden(Node *root)
+{
+    if (root == NULL)
+        return;
+
+    else
+    {
+        cout << root->data << " - ";
+        inOrden(root->derecha);
+    }
+}
+
+void postOrden(Node *root)
+{
+    if (root == NULL) return;
+    else
+    {
+        postOrden(root->izquierda);
+        postOrden(root->derecha);
+        cout <<root->data<<" - ";
     }
 }
 

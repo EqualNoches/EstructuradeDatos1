@@ -33,7 +33,7 @@ Participantes:
  5. Jose de la Cruz - ID:1113682
  6. Erick Saviñon - ID:1115161
 
- Fecha: 25/8/2023
+ Fecha: 6/10/2023
 
 */
 

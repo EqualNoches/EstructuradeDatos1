@@ -1,3 +1,42 @@
+/* Realizar un programa C++ que acepte un ID (su ID asignado por el INTEC) y ubique al estudiante en el índice correspondiente. La estructura para este caso debe ser:
+
+struct Estudiante {
+    int id;
+    string nombre;
+    string cod_carrera
+    int indice_acad;
+} hash[MAX];  //  MAX  es la cantidad de estudiantes de su sección
+
+La tabla hash está limitada a MAX (en su caso estará limitada al número de estudiantes de su sección de Estructuras de Datos y Algoritmos), por lo que solo aceptará los ID distintos de su clase y asignará la posición correspondiente.
+
+RESTRICCIONES:
+
+1-	Colecte todas los ID de su clase
+2-	El algoritmo hash no debe permitir generar un índice mayor a MAX (cantidad de estudiantes en su sección)
+3-	Realice una función hash que le permita asignar un índice a cada estudiante, evitando colisiones. Recuerde que el índice máximo es la cantidad de estudiante de su clase.
+4-	Una opción que permita que una vez se suministre el ID y se indique su índice, permita insertar los datos correspondientes al registro señalado en el índice asignado:
+        ID: (ID dado)
+        NOMBRE:
+        CARRERA:
+        INDICE ACADEMICO: 
+5-	Una opción que permita desplegar todos los registros en la tabla 
+6-	Una opción que permite desplegar el contenido del registro, dado el ID
+
+
+Participantes:
+ #. Name - ID
+
+ 1. Edward Díaz - ID:1115808
+ 2. Hector Wittkop - ID:1115754
+ 3. Alexander Gil - ID:1116763
+ 4. Juan Ortiz - ID:1115143
+ 5. Jose de la Cruz - ID:1113682
+ 6. Erick Saviñon - ID:1115161
+
+ Fecha: 25/8/2023
+
+*/
+
 #include <iostream>
 #include <string>
 #include <limits>
@@ -235,7 +274,7 @@ void eliminarTodosLosRegistros()
 
 bool continuar() //Sirve para continuar iterando el programa
 {
-	cout << "�Desea continuar? (S/N)\n";
+	cout << "¿Desea continuar? (S/N)\n";
 	string ans;
 	cin >> ans;
 	for (char& c : ans) {
@@ -243,7 +282,7 @@ bool continuar() //Sirve para continuar iterando el programa
 	}
 	if (ans != "s" && ans != "n") {
 		do {
-			cout << "Opci�n inv�lida.\n";
+			cout << "Opción inválida.\n";
 			cin >> ans;
 		} while (ans != "s" && ans != "n");
 	}
@@ -275,8 +314,8 @@ int main() {
 		cout << "1. Insertar estudiante" << endl;
 		cout << "2. Mostrar todos los registros" << endl;
 		cout << "3. Mostrar registro por ID" << endl;
-		cout << "4. Eliminar registro por ID" << endl; // Nueva opci�n
-		cout << "5. Eliminar todos los registros" << endl; // Nueva opci�n
+		cout << "4. Eliminar registro por ID" << endl; // Nueva opción
+		cout << "5. Eliminar todos los registros" << endl; // Nueva opción
 		cout << "6. Salir" << endl;
 		cout << "Ingrese su opcion: ";
 		opcion = obtenerIntValido();
@@ -360,7 +399,7 @@ int main() {
 			cout << "Saliendo del programa." << endl;
 			break;
 		default:
-			cout << "Opcion inv�lida. Intente nuevamente." << endl;
+			cout << "Opcion inválida. Intente nuevamente." << endl;
 			break;
 		}
 	} while (opcion != 6);

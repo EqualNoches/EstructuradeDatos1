@@ -109,6 +109,7 @@ void run()
     }
 }
 
+/// @brief Eliminar datos del tablero
 void EliminarTablero()
 {
     for (int i = 0; i < 8; i++)
@@ -123,9 +124,10 @@ void EliminarTablero()
 /// @brief Verifica si la poscicion que está en cuestión, esta obstruida por una torre
 /// @param Row
 /// @param Col
-/// @return Devolvera diciendo si esa poscición donde la reina se puede mover está obstruida o no
+/// @return Devolverá diciendo si esa poscición donde la reina se puede mover está obstruida o no
 bool PosicionObstruida(int Row, int Col)
 {
+    //variables para mayor legibilidad
     int queenRow = Reina[1];
     int queenCol = Reina[2];
     int TowerArow = torreA[1];
@@ -133,7 +135,7 @@ bool PosicionObstruida(int Row, int Col)
     int TowerBrow = torreB[1];
     int TowerBcol = torreB[2];
 
-    // esta es para buscar si la diagonal de la reina y las torres
+    // buscar si la diagonal de la reina y las torres
     bool TowerACross =
         abs(queenRow - TowerArow) == abs(queenCol - TowerAcol);
     bool TowerBCross =
@@ -143,6 +145,7 @@ bool PosicionObstruida(int Row, int Col)
 
     if (!TowerACross)
     {
+        //si la torre A está enlamisma fila de la 
         bool towerAOnQueenRow = queenRow == TowerArow;
         if (queenRow == Row && towerAOnQueenRow)
         {
@@ -259,6 +262,7 @@ void MovimientoReina()
             bool posicionReina = columnaReina == i && filaReina == j;
             bool posicionTorreA = torreA[1] == i && torreA[2] == j;
             bool posicionTorreB = torreB[1] == i && torreB[2] == j;
+
             if (posicionReina || posicionTorreA || posicionTorreB)
             {
                 continue;
@@ -272,10 +276,10 @@ void MovimientoReina()
             {
                 continue;
             }
-            if (!PosicionObstruida(j, i))
+            if (!PosicionObstruida(i, j))
             {
-                bool KillTorreA = ChoquePosciciones(torreA[1], torreA[2], i, i);
-                bool KillTorreB = ChoquePosciciones(torreB[1], torreB[2], i, i);
+                bool KillTorreA = ChoquePosciciones(torreA[1], torreA[2], i, j);
+                bool KillTorreB = ChoquePosciciones(torreB[1], torreB[2], i, j);
                 if (KillTorreA || KillTorreB)
                 {
                     tablero[i][j] = KILL;
@@ -289,39 +293,40 @@ void MovimientoReina()
     }
 }
 
+/// @brief Funcion simple de mostrar tabla
 void MostrarTabla()
 {
     cout << "  ";
     for (int i = 0; i < 8; i++) // introduce la fila de numeros
     {
-        cout << (i + 1) << " "; // Imprime las columnas con sus respectivos numeros en vertical
+        cout << (i + 1) << " "; // Imprime las columnas con su numero 
     }
     cout << endl;
     for (int i = 0; i < 8; i++)
     {
-        cout << (i + 1) << " "; // Imprime las filas
+        cout << (i + 1) << " "; // Imprime los datos de las filas
         for (int j = 0; j < 8; j++)
         {
-            char value = tablero[i][j];
-            if (!value)
+            char value = tablero[i][j]; //se encarga de verificar si encuentra un valor
+            if (!value) //si esta no contiene un valor
             { // Posición vacía
                 cout << "- ";
-                continue;
+                continue;//va a continuar con el ciclo
             }
 
-            if (value == 'T')
+            if (value == 'T') //si es una torre
             {
-                cout << "\033[31m" << 'T' << "\033[0m";
+                cout << "\033[31m" << 'T' << "\033[0m"; // se imprimira  una T en rojo
                 cout << " ";
             }
-            else if (value == 'R')
+            else if (value == 'R') //si es una Reina
             {
-                cout << "\033[34m" << 'R' << "\033[0m"; // con este codigo
+                cout << "\033[34m" << 'R' << "\033[0m"; // se imprimirá una R en azul
                 cout << " ";
             }
             else
             {
-                cout << value << " ";
+                cout << value << " "; // si contiene un valor diferente a los antes mencionados este sera impreso
             }
         }
         cout << endl;
@@ -329,6 +334,10 @@ void MostrarTabla()
     cout << endl;
 }
 
+/// @brief Funcion que se encarga de Validar que esa posición esté fuera del rango o ya esté ocupada
+/// @param row 
+/// @param col 
+/// @return Si esta ocupada será false, de lo contrario, true
 bool IsValidPosition(int row, int col)
 {
     if (row < 1 || row > 8 || col < 1 || col > 8)
@@ -347,6 +356,9 @@ bool IsValidPosition(int row, int col)
     return true;
 }
 
+/// @brief Funcion que se encarga de almacenar 
+        ///los datos en el tablero y en los arreglos respectivos
+/// @param i 
 void GetPosition(int i)
 {
     int row;
@@ -387,6 +399,7 @@ void GetPosition(int i)
     }
 }
 
+/// @brief función para preguntar los datos de las posiciones de los elementos 
 void PreguntasPosiciones()
 {
     const string names[] = {"Reina", "Primera torre", "segunda torre"};
@@ -402,6 +415,8 @@ void PreguntasPosiciones()
     }
 }
 
+/// @brief Validar si es un int
+/// @param n 
 void ValidateInput(int &n)
 {
     while (!(cin >> n))
@@ -412,6 +427,8 @@ void ValidateInput(int &n)
     }
 }
 
+/// @brief Verifica si el tablero tiene elementos
+/// @return si el tablero está lleno, true y si no está lleno true
 bool TableroLleno()
 {
     for (int i = 0; i < 8; i++)

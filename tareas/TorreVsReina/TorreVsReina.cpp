@@ -29,12 +29,14 @@ void run();
 bool PosicionObstruida(int, int);
 bool ChoquePosciciones(int TowerXaxis, int TowerYAxis, int x, int y);
 bool IsValidPosition(int, int);
+bool TableroLleno();
 
 void ValidateInput(int &);
 void GetPosition(int);
 void PreguntasPosiciones();
 void MovimientoReina();
 void MostrarTabla();
+void EliminarTablero();
 
 int main(int argc, char const *argv[])
 {
@@ -53,23 +55,51 @@ void run()
              << "1. Iniciar programa" << endl
              << "2. Mostrar tablero" << endl
              << "3. Introducir valores" << endl
-             << "4. Salir" << endl
-             << "Opcion(1-4): ";
+             << "4. Limpiar tabla" << endl
+             << "5. Salir" << endl
+             << "Opcion(1-5): ";
         ValidateInput(opcion);
 
         switch (opcion)
         {
         case 1:
-            PreguntasPosiciones();
+            if (!TableroLleno())
+            {
+                PreguntasPosiciones();
+            }
+            else
+            {
+                cout<< " \nEl tablero ya contiene elementos.\n"<< endl;
+                break;
+            }
             break;
         case 2:
             MostrarTabla();
             break;
         case 3:
-
-            MovimientoReina();
+            if (TableroLleno())
+            {
+                MovimientoReina();
+            }
+            else
+            {
+                cout << "\nEl tablero ya esta vacio.\n"
+                     << endl;
+                     break;
+            }
             break;
         case 4:
+            if (TableroLleno())
+            {
+                EliminarTablero();
+            }
+            else
+            {
+                cout << "\nEl tablero ya esta vacio.\n"
+                     << endl;
+            }
+            break;
+        case 5:
             exit(0);
             break;
         default:
@@ -79,6 +109,21 @@ void run()
     }
 }
 
+void EliminarTablero()
+{
+    for (int i = 0; i < 8; i++)
+    {
+        for (int j = 0; j < 8; j++)
+        {
+            tablero[i][j] = 0;
+        }
+    }
+}
+
+/// @brief Verifica si la poscicion que está en cuestión, esta obstruida por una torre
+/// @param Row
+/// @param Col
+/// @return Devolvera diciendo si esa poscición donde la reina se puede mover está obstruida o no
 bool PosicionObstruida(int Row, int Col)
 {
     int queenRow = Reina[1];
@@ -88,7 +133,7 @@ bool PosicionObstruida(int Row, int Col)
     int TowerBrow = torreB[1];
     int TowerBcol = torreB[2];
 
-    // esta es para buscar si la diagonal de la ri
+    // esta es para buscar si la diagonal de la reina y las torres
     bool TowerACross =
         abs(queenRow - TowerArow) == abs(queenCol - TowerAcol);
     bool TowerBCross =
@@ -113,7 +158,7 @@ bool PosicionObstruida(int Row, int Col)
         bool isTowerAOnQueenCol = queenCol == TowerAcol;
         if (queenCol == Col && isTowerAOnQueenCol)
         {
-            if (queenRow < TowerArow && TowerArow < Row)
+            if (queenRow < TowerArow && TowerArow < Row) // verifica si la fila de la reina es un valor mas pequeño que la torre
             {
                 return true;
             }
@@ -153,14 +198,14 @@ bool PosicionObstruida(int Row, int Col)
                 return true;
             }
         }
-        bool isTowerOnBQueenCol = queenCol == TowerBcol;
-        if (queenCol == Col && isTowerOnBQueenCol)
+        bool TorreBColReina = queenCol == TowerBcol;
+        if (queenCol == Col && TorreBColReina)
         {
-            if (queenRow < TowerBrow && TowerBrow < Row)
+            if (queenCol < TowerBrow && TowerBrow < Row)
             {
                 return true;
             }
-            if (queenRow > TowerBrow && TowerBrow > Row)
+            if (queenCol > TowerBrow && TowerBrow > Row)
             {
                 return true;
             }
@@ -365,4 +410,19 @@ void ValidateInput(int &n)
         cin.clear();
         cin.ignore(123, '\n');
     }
+}
+
+bool TableroLleno()
+{
+    for (int i = 0; i < 8; i++)
+    {
+        for (int j = 0; j < 8; j++)
+        {
+            if (tablero[i][j] != 0)
+            {
+                return true;
+            }
+        }
+    }
+    return false;
 }

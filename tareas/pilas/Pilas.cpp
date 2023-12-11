@@ -69,23 +69,14 @@ int main(int argc, char const *argv[])
         switch (choice)
         {
         case 1:
-            cout << "\nCuantos elementos quieres agregar a esta pila?: ";
-            isDigit(cantElements);
-            for (int i = 0; i < cantElements; i++)
-            {
                 cout << "Digite un numero: ";
                 isDigit(data);
                 Push(stack, data);
-            }
             break;
 
         case 2:
             cout << "\nEliminando elementos de la pila" << endl;
             cout << "Recuerde que los elementos saldran LIFA (Last in First Out)\n" << endl;
-
-            while (stack != NULL) //* while the elements inside the stack are not equal to NUll
-            {
-
                 if (stack != NULL)
                 {
                     Pop(stack, data);
@@ -93,10 +84,9 @@ int main(int argc, char const *argv[])
                 }
                 else
                 {
-                    cout << position << ". " << data << "\n";
+                    cout << "Empty Stack\n";
                 }
                 position++;
-            }
             break;
 
         case 3:

@@ -51,7 +51,7 @@ struct Node
 //* Prototipos de Funciones
 void Enqueue(Node *&, Node *&, int, int, int);
 void Dequeue(Node *&, Node *&, int &);
-void DisplayStack(Node *);
+void DisplayQueue(Node *);
 bool empty_queue(Node *);
 void IsDigit(int &);
 
@@ -73,7 +73,7 @@ int main(int argc, char const *argv[])
         cout << "\nMenu:" << endl;
         cout << "1. Enqueue" << endl;
         cout << "2. Dequeue" << endl;
-        cout << "3. Display Stack" << endl;
+        cout << "3. Display Queue" << endl;
         cout << "4. Exit" << endl;
         cout << "Enter your choice: ";
         IsDigit(choice);
@@ -81,75 +81,34 @@ int main(int argc, char const *argv[])
         switch (choice)
         {
         case 1:
-            cout << "Cuantos elementos quieres agregar a esta cola?: ";
-            IsDigit(cantElements);
-            for (int i = 0; i < cantElements; i++)
+            cout << "\nDigite un numero: ";
+            IsDigit(data);
+            cout << "Que tipo de prioridad desea que tenga este numero?: (0-16)";
+            IsDigit(priority);
+            if (priority >= 16)
             {
-                cout << "\nDesea que su numero tenga prioridad?\n"
-                     << "1. Si\n"
-                     << "2. No\n"
-                     << "Opcion: ";
-
-                IsDigit(priority);
-
-                switch (priority)
-                {
-                case 1: //*si es Caso uno, preguntará por prioridad
-                    cout << "Que tipo de prioridad desea que tenga este numero?: ";
-                    IsDigit(priority);
-                    cout << "\nDigite un numero: ";
-                    IsDigit(data);
-                    if (priority > 16)
-                    {
-                        priority = 16;
-                    }
-                    Enqueue(front, end, psInfo, data, priority);
-                    psInfo++;
-                    break;
-
-                case 2: //*Si es caso 2, agrega prioridad automaticamente.
-                    cout << "Digite un numero: ";
-                    IsDigit(data);
-                    priority = 16;
-                    Enqueue(front, end, psInfo, data, priority);
-                    psInfo++;
-                    break;
-
-                default:
-                    cout << "Solo introduzca 1 o 2";
-                    break;
-                }
+                priority = 16;
             }
             psInfo++;
+            Enqueue(front, end, psInfo, data, priority);
             break;
-
         case 2:
-            if (front == NULL)
-            {
-                cout << "\nEmpty Queue" << endl;
-            }
-            else
-            {
                 cout << "\nEliminando elementos de la cola" << endl;
                 cout << "Recuerde que los elementos saldran FiFo (First in First Out)" << endl;
-                while (front != NULL) //* while the elements inside the stack are not equal to NUll
+                if (front != NULL)
                 {
-                    Dequeue(front, end, data);
-                    if (front != NULL)
-                    {
-                        cout << position << ". " << data << "\n";
-                    }
-                    else
-                    {
-                        cout << position << ". " << data << "\n";
-                    }
-                    position++;
+                    cout << position << ". " << data << "\n";
                 }
-            }
-            psInfo = 0;
+                else
+                {
+                    cout << "Empty queue\n";
+                }
+                Dequeue(front, end, data);
+                position++;
+                psInfo--;
             break;
         case 3:
-            DisplayStack(front);
+            DisplayQueue(front);
             break;
 
         case 4:
@@ -235,7 +194,7 @@ void Dequeue(Node *&front, Node *&end, int &n)
     }
     delete aux;
 }
-void DisplayStack(Node *first)
+void DisplayQueue(Node *first)
 {
     int number = 1;
     if (first == NULL)
